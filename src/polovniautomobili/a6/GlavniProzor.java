@@ -5,6 +5,9 @@
  */
 package polovniautomobili.a6;
 
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Korisnik
@@ -234,6 +237,18 @@ public class GlavniProzor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void populate() {
-        
+        ArrayList<ModeliDO> modeli = DatabaseProxy.getCarModels();
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Sifra");
+        dtm.addColumn("Model");
+        dtm.addColumn("Proizvodjac");
+        for (ModeliDO m : modeli ) {
+            Object[] red = new Object[3];
+            red[0] = m.ID;
+            red[1] = m.Naziv;
+            red[2] = m.ProizvodjacID;
+            dtm.addRow(red);
+        }
+        jTable1.setModel(dtm);
     }
 }

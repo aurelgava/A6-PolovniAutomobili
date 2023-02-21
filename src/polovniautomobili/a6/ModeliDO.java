@@ -9,14 +9,9 @@ package polovniautomobili.a6;
  *
  * @author Korisnik
  */
-public class PolovniAutomobiliA6 {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        DatabaseProxy.konektujSe();
-        new GlavniProzor().setVisible(true);
-    }
+public class ModeliDO {
+    public int ID;
+    public String Naziv;
+    public int ProizvodjacID;
     
 }
