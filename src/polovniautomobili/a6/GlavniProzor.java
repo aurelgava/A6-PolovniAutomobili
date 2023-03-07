@@ -6,6 +6,7 @@
 package polovniautomobili.a6;
 
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -76,6 +77,11 @@ public class GlavniProzor extends javax.swing.JFrame {
         jLabel4.setText("Sifra");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe (1).png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,11 +182,23 @@ public class GlavniProzor extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        int sifra = Integer.parseInt(jTextField2.getText());
+        for(int i=0; i<dtm.getRowCount(); i++){
+            //System.out.println(dtm.getValueAt(i, 0));
+            if(sifra == (int)dtm.getValueAt(i, 0)){
+                jTextField1.setText((String)dtm.getValueAt(i,1));
+            }
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,7 +239,7 @@ public class GlavniProzor extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<ProizvodjacDO> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -237,6 +255,7 @@ public class GlavniProzor extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void populate() {
+        //Popunjavanje tabele
         ArrayList<ModeliDO> modeli = DatabaseProxy.getCarModels();
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Sifra");
@@ -246,9 +265,18 @@ public class GlavniProzor extends javax.swing.JFrame {
             Object[] red = new Object[3];
             red[0] = m.ID;
             red[1] = m.Naziv;
-            red[2] = m.ProizvodjacID;
+            red[2] = m.pro;
             dtm.addRow(red);
         }
         jTable1.setModel(dtm);
+        
+        //Popunjavanje comboa
+        ArrayList<ProizvodjacDO> proizvodjaci = DatabaseProxy.getProizvodjaci();
+        DefaultComboBoxModel<ProizvodjacDO> dcbm = new DefaultComboBoxModel<>();
+        for (ProizvodjacDO p : proizvodjaci){
+            dcbm.addElement(p);
+        }
+        jComboBox1.setModel(dcbm);
+        
     }
 }

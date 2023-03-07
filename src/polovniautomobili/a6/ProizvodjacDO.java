@@ -9,9 +9,13 @@ package polovniautomobili.a6;
  *
  * @author Korisnik
  */
-public class ModeliDO {
+class ProizvodjacDO {
     public int ID;
     public String Naziv;
-    //public String Proizvodjac;
-    public ProizvodjacDO pro;
+
+    @Override
+    public String toString() {
+        return  Naziv;
+    }
+    
 }

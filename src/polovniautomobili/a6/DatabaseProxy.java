@@ -32,13 +32,16 @@ public class DatabaseProxy {
         try {
             ArrayList<ModeliDO> modeli = new ArrayList<>();
             Statement s = c.createStatement();
-            ResultSet rs = s.executeQuery("SELECT * FROM Model");
+            ResultSet rs = s.executeQuery("SELECT Model.ModelID AS ModelID, Model.Naziv AS Naziv, Proizvodjac.Naziv AS Proizvodjac, Proizvodjac.ProizvodjacID AS ProizvodjacID FROM "
+                    + "Model INNER JOIN Proizvodjac ON Model.ProzivodjacID=Proizvodjac.ProizvodjacID");
             
             while (rs.next()) {
                 ModeliDO m = new ModeliDO();
                 m.ID = rs.getInt("ModelID");
                 m.Naziv = rs.getString("Naziv");
-                m.ProizvodjacID = rs.getInt("ProzivodjacID");
+                m.pro = new ProizvodjacDO();
+                m.pro.Naziv = rs.getString("Proizvodjac");
+                m.pro.ID = rs.getInt("ProizvodjacID");
                 modeli.add(m);
                 
             }
@@ -48,5 +51,26 @@ public class DatabaseProxy {
             return null;
         }
 
+    }
+
+    static ArrayList<ProizvodjacDO> getProizvodjaci() {
+        try {
+            ArrayList<ProizvodjacDO> proizvodjaci = new ArrayList<>();
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM Proizvodjac");
+            
+            while (rs.next()) {
+                ProizvodjacDO m = new ProizvodjacDO();
+                m.ID = rs.getInt("ProizvodjacID");
+                m.Naziv = rs.getString("Naziv");
+               
+                proizvodjaci.add(m);
+                
+            }
+            return proizvodjaci;
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseProxy.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 }
