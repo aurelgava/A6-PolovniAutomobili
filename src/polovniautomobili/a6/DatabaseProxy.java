@@ -5,7 +5,6 @@
  */
 package polovniautomobili.a6;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -34,7 +33,7 @@ public class DatabaseProxy {
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT Model.ModelID AS ModelID, Model.Naziv AS Naziv, Proizvodjac.Naziv AS Proizvodjac, Proizvodjac.ProizvodjacID AS ProizvodjacID FROM "
                     + "Model INNER JOIN Proizvodjac ON Model.ProzivodjacID=Proizvodjac.ProizvodjacID");
-            
+
             while (rs.next()) {
                 ModeliDO m = new ModeliDO();
                 m.ID = rs.getInt("ModelID");
@@ -43,7 +42,7 @@ public class DatabaseProxy {
                 m.pro.Naziv = rs.getString("Proizvodjac");
                 m.pro.ID = rs.getInt("ProizvodjacID");
                 modeli.add(m);
-                
+
             }
             return modeli;
         } catch (SQLException ex) {
@@ -58,19 +57,32 @@ public class DatabaseProxy {
             ArrayList<ProizvodjacDO> proizvodjaci = new ArrayList<>();
             Statement s = c.createStatement();
             ResultSet rs = s.executeQuery("SELECT * FROM Proizvodjac");
-            
+
             while (rs.next()) {
                 ProizvodjacDO m = new ProizvodjacDO();
                 m.ID = rs.getInt("ProizvodjacID");
                 m.Naziv = rs.getString("Naziv");
-               
+
                 proizvodjaci.add(m);
-                
+
             }
             return proizvodjaci;
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseProxy.class.getName()).log(Level.SEVERE, null, ex);
             return null;
+        }
+    }
+
+    static void izmeniModel(int sifra, ProizvodjacDO proizvodjac, String naziv) {
+        try {
+            PreparedStatement ps = c.prepareStatement("UPDATE Model SET Naziv=?, ProzivodjacID=? WHERE modelID=?");
+            ps.setString(1, naziv);
+            ps.setInt(2, proizvodjac.ID);
+            ps.setInt(3, sifra);
+            ps.execute();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseProxy.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

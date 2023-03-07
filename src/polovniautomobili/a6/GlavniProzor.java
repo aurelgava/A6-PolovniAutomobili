@@ -7,6 +7,7 @@ package polovniautomobili.a6;
 
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -56,6 +57,11 @@ public class GlavniProzor extends javax.swing.JFrame {
         jLabel2.setText("Naziv");
 
         jButton1.setText("Izmeni");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Izadji");
 
@@ -194,11 +200,24 @@ public class GlavniProzor extends javax.swing.JFrame {
         for(int i=0; i<dtm.getRowCount(); i++){
             //System.out.println(dtm.getValueAt(i, 0));
             if(sifra == (int)dtm.getValueAt(i, 0)){
+                jTable1.setRowSelectionInterval(i, i);
                 jTextField1.setText((String)dtm.getValueAt(i,1));
+                for(int j=0;j<jComboBox1.getItemCount(); j++){
+                    if(jComboBox1.getItemAt(j).ID == ((ProizvodjacDO)dtm.getValueAt(i, 2)).ID){
+                        jComboBox1.setSelectedIndex(j);
+                    }
+                }
             }
+            
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        DatabaseProxy.izmeniModel(Integer.parseInt(jTextField2.getText()),(ProizvodjacDO)jComboBox1.getSelectedItem(), jTextField1.getText());
+        JOptionPane.showMessageDialog(this, "Uspeh", "Uspesan upis", JOptionPane.INFORMATION_MESSAGE);
+        populate();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
