@@ -1,26 +1,35 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package polovniautomobili.a6;
 
-import java.util.ArrayList;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Korisnik
+ * @author aurel
  */
 public class GlavniProzor extends javax.swing.JFrame {
+
+    Connection c;
 
     /**
      * Creates new form GlavniProzor
      */
     public GlavniProzor() {
         initComponents();
+        try {
+            c = DriverManager.getConnection(PolovniAutomobiliA6.URLBAZE);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Greska prilikom povezivanja s bazom", "Greska", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         populate();
     }
 
@@ -37,20 +46,23 @@ public class GlavniProzor extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Model");
 
         jLabel1.setText("Proizvodjac");
 
@@ -64,6 +76,22 @@ public class GlavniProzor extends javax.swing.JFrame {
         });
 
         jButton2.setText("Izadji");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Model:");
+
+        jLabel4.setText("Sifra:");
+
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe (1).png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -76,80 +104,59 @@ public class GlavniProzor extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
-
-        jLabel3.setText("Model");
-
-        jLabel4.setText("Sifra");
-
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resursi/loupe (1).png"))); // NOI18N
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, 131, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jTextField1))
+                .addGap(115, 115, 115)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel4)
-                        .addGap(27, 27, 27)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
-                        .addGap(0, 75, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 556, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton3)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel2)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(93, 93, 93)
+                        .addGap(55, 55, 55)
                         .addComponent(jButton1)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addComponent(jButton2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Modeli automobila", jPanel1);
@@ -158,24 +165,31 @@ public class GlavniProzor extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 585, Short.MAX_VALUE)
+            .addGap(0, 981, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 313, Short.MAX_VALUE)
+            .addGap(0, 374, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Broj raspolozih vozila", jPanel2);
+        jTabbedPane1.addTab("Broj raspolozivih vozila", jPanel2);
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Polovni automobili - Aplikacija 4EIT-A6\nTehnička dokumentacija\nProgramski jezici : JAVA, verzija JDK 19\n\t\t\tSQL, pristup bazi podataka i izmena podataka\nRazvojna okruženja(IDE) i programi : Apache NetBeans, verzija 14\n\t\t\t\t\t\tMicrosoft Access 2016, za upravljanje \t\t\t\t\t\tbazom podataka\nDa bismo počeli sa bilo kakvim radom, prvo je potrebno da smestimo sve potrebne resurse i datoteke u jedan folder u NetBeans-u koji smo nazvali resursi. Tu smeštamo bazu podataka i ostale potrebne stvari za UI Design (slike, videe...).\nDodajemo UCanAccess 5.0.1 i jFreeChart 1.0.1 fajlove koji su potrebni kako bismo upravljali bazom podataka kroz aplikaciju i mogli izvući rezultati kroz grafik. Smeštamo ih u folder Libraries, koji se kreira automatski prilikom kreiranja projekta u NetBeans-u. Dadoteke i fajlove skidamo se web sajta https://sourceforge.net/\nNakon toga, kreiramo više klasa koje su potrebne za funkcionalnost naše aplikacije.\nGlavna odnosno main klasa je naravno klasa preko koje pokrećemo našu aplikaciju i u kojoj se nalazi URL_BAZE odnosno relativna adresa naše baze i ona se naziva PolovniAutomobiliA6.java.\nKlasa koja je zadužena za korisnički interfejs naziva se GlavniProzor.java. Preko ove klase korisnik može da vidi čemu ova aplikacija služi. Kreiramo formu koja ima tri taba. \nU prvom tabu imamo par jTextField polja, koja nam služe kako bi se u njih upisale vrednosti odnosno proizvođač i naziv modela automobila i jednu tabelu jTable1 kako bismo mogli da selektujemo automobil koji želimo. \nTo se izvšava tako što u jedno jTextField polje unesemo šifru tog automobila i kliknemo na dugme jButton1, koje zatim poziva metodu jButton1ActionPerformed, koja pretražuje da li u bazi podataka postoji automobil sa zadatom šifrom i ukoliko postoji, taj automobil se prikazuje u ostalim jTextField poljima.\nNa istom tabu, nalaze se još dva dugmeta. Dugme IZAĐI odnosno jButton2, koje zatvara aplikaciju ukoliko se klikne na njega, pomoću ugrađene JAVA funkcije koja se naziva DISPOSE. I još jedno dugme, IZMENI odnosno jButton3, koje vrši korekciju baze podataka za određeni automobil tako što poziva metodu jButton1ActionPerformed, koja SQL upitom update-uje određene podatke unete u jTextField polja. I naravno, tabela jTable1 se automatski refreshuje na klik dugmeta.\nNa drugom tabu nalazi se takođe jedna tabela jTable2 za pregledavanje podataka u bazi. Takođe, nalaze se i dva jComboBox modela, koji nam služe kako bismo zadali uslov kojim će se klikom na dugme jButton4 pokazati određeni podaci automobila u tom istom vremenskom intervalu. Takođe, klikom na dugme Prikaži odnosno jButton4 na desnoj strani taba pojavljuje se jFreeChart model odnosno grafikon. Ovaj model formira se tako što se u klasi GlavniProzor.java kreira objekat BarChart koji mi prethodno podesimo da daje parametre koje želimo. U ovom slučaju naš grafikon će pokazivati raspoloživi broj vozila za svakog od proizvođača, ali će posmatrati samo godišta automobila koji su zadati u vremenskom intervalu u jComboBox modelima.\nNa trećem tabu ispisano je kratko upustvo za korišćenje koje je namenjeno korisniku aplikacije.\n");
+        jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 585, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 969, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 313, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Uputstvo", jPanel3);
@@ -195,28 +209,55 @@ public class GlavniProzor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        int sifra = Integer.parseInt(jTextField2.getText());
-        for(int i=0; i<dtm.getRowCount(); i++){
-            //System.out.println(dtm.getValueAt(i, 0));
-            if(sifra == (int)dtm.getValueAt(i, 0)){
-                jTable1.setRowSelectionInterval(i, i);
-                jTextField1.setText((String)dtm.getValueAt(i,1));
-                for(int j=0;j<jComboBox1.getItemCount(); j++){
-                    if(jComboBox1.getItemAt(j).ID == ((ProizvodjacDO)dtm.getValueAt(i, 2)).ID){
-                        jComboBox1.setSelectedIndex(j);
+        try {
+            int id = Integer.parseInt(jTextField2.getText());
+            boolean daLiPostojiSifraUTabeli = false;
+            for (int i = 0; i < jTable1.getRowCount(); i++) {
+                if (id == (int) jTable1.getValueAt(i, 0)) {
+                    daLiPostojiSifraUTabeli = true;
+                    jTable1.setRowSelectionInterval(i, i);
+                    jTextField1.setText(((ModeliDO) jTable1.getValueAt(i, 1)).Naziv);
+                    for (int j = 0; j < jComboBox1.getItemCount(); j++) {
+                        if (jComboBox1.getItemAt(j).ID == ((ModeliDO) jTable1.getValueAt(i, 1)).pro.ID) {
+                            jComboBox1.setSelectedIndex(j);
+                            break;
+                        }
                     }
+                    break;
                 }
             }
-            
+            if (!daLiPostojiSifraUTabeli) {
+                jTextField1.setText("");
+                jComboBox1.setSelectedIndex(-1);
+                //jTable1.setRowSelectionInterval(-1, -1);
+                jTable1.removeRowSelectionInterval(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+            }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Polje sa sifrom mora biti popunjeno!", "Greska", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DatabaseProxy.izmeniModel(Integer.parseInt(jTextField2.getText()),(ProizvodjacDO)jComboBox1.getSelectedItem(), jTextField1.getText());
-        JOptionPane.showMessageDialog(this, "Uspeh", "Uspesan upis", JOptionPane.INFORMATION_MESSAGE);
-        populate();
+        try {
+            PreparedStatement ps = c.prepareStatement("UPDATE Model SET ProzivodjacID = ?, Naziv = ? WHERE ModelID = ?");
+            ps.setInt(1, ((ProizvodjacDO) jComboBox1.getSelectedItem()).ID);
+            ps.setString(2, jTextField1.getText());
+            ps.setInt(3, (int) jTable1.getValueAt(jTable1.getSelectedRow(), 0));
+            ps.execute();
+            populate();
+            JOptionPane.showMessageDialog(this, "Uspesno izmenjeni podaci", "Uspeh", JOptionPane.INFORMATION_MESSAGE);
+            jTextField1.setText("");
+            jComboBox1.setSelectedIndex(-1);           
+            //jTable1.removeRowSelectionInterval(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Podaci nisu izmenjeni!", "Greska", JOptionPane.WARNING_MESSAGE);
+            Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -267,35 +308,49 @@ public class GlavniProzor extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 
     private void populate() {
-        //Popunjavanje tabele
-        ArrayList<ModeliDO> modeli = DatabaseProxy.getCarModels();
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.addColumn("Sifra");
-        dtm.addColumn("Model");
-        dtm.addColumn("Proizvodjac");
-        for (ModeliDO m : modeli ) {
-            Object[] red = new Object[3];
-            red[0] = m.ID;
-            red[1] = m.Naziv;
-            red[2] = m.pro;
-            dtm.addRow(red);
+        try {
+            Statement s = c.createStatement();
+            ResultSet rs = s.executeQuery("SELECT * FROM Model INNER JOIN Proizvodjac ON Model.ProzivodjacID = Proizvodjac.ProizvodjacID");
+            DefaultTableModel dtm = new DefaultTableModel();
+            dtm.addColumn("");
+            dtm.addColumn("");
+            while (rs.next()) {
+                Object[] red = new Object[2];
+                red[0] = rs.getInt("ModelID");
+                ModeliDO model = new ModeliDO();
+                model.ID = rs.getInt("ModelID");
+                model.Naziv = rs.getString("Model.Naziv");
+                model.pro = new ProizvodjacDO();
+                model.pro.ID = rs.getInt("Proizvodjac.ProizvodjacID");
+                model.pro.Naziv = rs.getString("Proizvodjac.Naziv");
+                red[1] = model;
+                //red[1] = rs.getString("Model.Naziv") + ", " + rs.getString("Proizvodjac.Naziv");
+                dtm.addRow(red);
+            }
+            jTable1.setModel(dtm);
+
+            ResultSet rs1 = s.executeQuery("SELECT * FROM Proizvodjac");
+            DefaultComboBoxModel<ProizvodjacDO> dcbm = new DefaultComboBoxModel<>();
+            while (rs1.next()) {
+                ProizvodjacDO pro = new ProizvodjacDO();
+                pro.ID = rs1.getInt("Proizvodjac.ProizvodjacID");
+                pro.Naziv = rs1.getString("Naziv");
+                dcbm.addElement(pro);
+            }
+            jComboBox1.setModel(dcbm);
+            jComboBox1.setSelectedIndex(-1);
+
+        } catch (SQLException ex) {
+            Logger.getLogger(GlavniProzor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        jTable1.setModel(dtm);
-        
-        //Popunjavanje comboa
-        ArrayList<ProizvodjacDO> proizvodjaci = DatabaseProxy.getProizvodjaci();
-        DefaultComboBoxModel<ProizvodjacDO> dcbm = new DefaultComboBoxModel<>();
-        for (ProizvodjacDO p : proizvodjaci){
-            dcbm.addElement(p);
-        }
-        jComboBox1.setModel(dcbm);
-        
     }
 }

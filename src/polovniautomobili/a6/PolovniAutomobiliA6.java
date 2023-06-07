@@ -10,12 +10,11 @@ package polovniautomobili.a6;
  * @author Korisnik
  */
 public class PolovniAutomobiliA6 {
-
+    public static final String URLBAZE = "jdbc:ucanaccess://src\\resursi\\Polovni.accdb";
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        DatabaseProxy.konektujSe();
         new GlavniProzor().setVisible(true);
     }
     

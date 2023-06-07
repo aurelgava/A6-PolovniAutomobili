@@ -11,7 +11,12 @@ package polovniautomobili.a6;
  */
 public class ModeliDO {
     public int ID;
-    public String Naziv;
-    //public String Proizvodjac;
+    public String Naziv;    
     public ProizvodjacDO pro;
+
+    @Override
+    public String toString() {
+        return Naziv + ", " + pro.Naziv;
+    }
+    
 }
